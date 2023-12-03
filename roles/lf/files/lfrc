@@ -1,0 +1,102 @@
+# interpreter for shell commands
+set shell sh
+set shellopts '-eu'
+set ifs "\n"
+set scrolloff 10
+set cursorpreviewfmt "\033[7;2m"
+
+# My Bindings
+map s updir
+map t down
+map n up
+map b open
+
+map T :updir; down; open
+map N :updir; up; open
+
+# Previews
+set previewer ctpv
+set cleaner ctpvclear
+&ctpv -s $id
+&ctpvquit $id
+
+set icons
+# set drawbox
+set hidden
+set number
+set ratios '1:2:3'
+set tabstop 2
+set period  5
+set info size:time
+
+# cp-p - copy and move
+cmd paste $cp-p --lf-paste $id
+# cmd paste &{{
+    # set -- $(cat ~/.local/share/lf/files)
+    # mode="$1"
+    # shift
+    # case "$mode" in
+        # copy)
+            # rsync -av --ignore-existing --progress -- "$@" . |
+            # stdbuf -i0 -o0 -e0 tr '\r' '\n' |
+            # while IFS= read -r line; do
+                # lf -remote "send $id echo $line"
+            # done
+            # ;;
+        # move) mv -n -- "$@" .;;
+    # esac
+    # rm ~/.local/share/lf/files
+    # lf -remote "send clear"
+# }}
+
+# Bulk rename multiple files
+cmd bulk-rename ${{
+    old="$(mktemp)"
+    new="$(mktemp)"
+    if [ -n "$fs" ]; then
+        fs="$(basename -a $fs)"
+    else
+        fs="$(ls)"
+    fi
+    printf '%s\n' "$fs" >"$old"
+    printf '%s\n' "$fs" >"$new"
+    $EDITOR "$new"
+    [ "$(wc -l < "$new")" -ne "$(wc -l < "$old")" ] && exit
+    paste "$old" "$new" | while IFS= read -r names; do
+        src="$(printf '%s' "$names" | cut -f1)"
+        dst="$(printf '%s' "$names" | cut -f2)"
+        if [ "$src" = "$dst" ] || [ -e "$dst" ]; then
+            continue
+        fi
+        mv -- "$src" "$dst"
+    done
+    rm -- "$old" "$new"
+    lf -remote "send $id unselect"
+}}
+map R bulk-rename
+
+# Enhancing the rename command
+# unmap the default rename keybinding
+map r
+
+map i rename
+map I :rename; cmd-home
+map A :rename; cmd-end
+map c :rename; cmd-delete-home
+map C :rename; cmd-end; cmd-delete-home
+
+# trash-cli
+cmd trash %trash-put $fx
+map d trash
+
+# Edit and reload confid file
+cmd edit-config ${{
+    $EDITOR ~/.config/lf/lfrc
+    lf -remote "send $id source ~/.config/lf/lfrc"
+}}
+
+map C edit-config
+
+# Create new directories
+map aa push %mkdir<space>
+map at push %touch<space>

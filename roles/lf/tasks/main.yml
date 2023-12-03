@@ -1,0 +1,30 @@
+---
+- name: "lf | Install lf"
+  ansible.builtin.package:
+    name: lf
+    state: latest
+  become: true
+
+- name: "lf | Config folder"
+  ansible.builtin.file:
+    mode: "0755"
+    path: "{{ ansible_user_dir }}/.config/lf"
+    state: directory
+
+- name: " lfrc | Create a symbolic link"
+  ansible.builtin.file:
+    src: "{{ ansible_user_dir }}/.dotfiles/roles/lf/files/lfrc"
+    dest: "{{ ansible_user_dir }}/.config/lf/lfrc"
+    state: link
+
+- name: " lf | icons | Create a symbolic link"
+  ansible.builtin.file:
+    src: "{{ ansible_user_dir }}/.dotfiles/roles/lf/files/icons"
+    dest: "{{ ansible_user_dir }}/.config/lf/icons"
+    state: link
+
+- name: " lf | colors | Create a symbolic link"
+  ansible.builtin.file:
+    src: "{{ ansible_user_dir }}/.dotfiles/roles/lf/files/colors"
+    dest: "{{ ansible_user_dir }}/.config/lf/colors"
+    state: link
