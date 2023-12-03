@@ -1,27 +1,33 @@
 ---
-- name: Install
+- name: "kitty | Install kitty"
   ansible.builtin.package:
-    name:
-      - kitty
+    name: kitty
     state: latest
   become: true
 
-- name: Config folder
+- name: "kitty | Config folder"
   ansible.builtin.file:
     mode: "0755"
     path: "{{ ansible_user_dir }}/.config/kitty"
     state: directory
 
-- name: Configuration
-  ansible.builtin.file:
+- name: "kitty | Copy kitty.conf"
+  ansible.builtin.copy:
     dest: "{{ ansible_user_dir }}/.config/kitty/kitty.conf"
     src: "kitty.conf"
+    state: link
 
-- name: Themes
-  copy:
-    dest: "{{ ansible_user_dir }}/.config/kitty"
-    src: "{{ kitty_config_item }}"
-  loop_control:
-    loop_var: kitty_config_item
-  with_fileglob:
-    - "kitty_*"
+# - name: Configuration
+  # ansible.builtin.file:
+    # dest: "{{ ansible_user_dir }}/.config/kitty/kitty.conf"
+    # src: "kitty.conf.j2"
+    # state: link
+
+# - name: Themes
+  # copy:
+    # dest: "{{ ansible_user_dir }}/.config/kitty"
+    # src: "{{ kitty_config_item }}"
+  # loop_control:
+    # loop_var: kitty_config_item
+  # with_fileglob:
+    # - "kitty_*"
