@@ -89,6 +89,10 @@ map C :rename; cmd-end; cmd-delete-home
 cmd trash %trash-put $fx
 map d trash
 
+# Copy or move files on client instead of server
+map y %cp -ri -- $fs .
+map p %mv -i -- $fs .
+
 # Edit and reload confid file
 cmd edit-config ${{
     $EDITOR ~/.config/lf/lfrc
@@ -100,3 +104,11 @@ map C edit-config
 # Create new directories
 map aa push %mkdir<space>
 map at push %touch<space>
+
+
+# starship intergation
+cmd on-cd &{{
+    export STARSHIP_SHELL=
+    fmt="$(starship prompt)"
+    lf -remote "send $id set promptfmt \"$fmt\""
+  }}
