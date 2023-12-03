@@ -6,7 +6,7 @@ set -e
 CONFIG_DIR="$HOME/.config/dotfiles"
 DOTFILES_DIR="$HOME/.dotfiles"
 SSH_DIR="$HOME/.ssh"
-VAULT_SECRET="$HOME/.ansible-vault/vault.secret"
+VAULT_SECRET="$HOME/.config/ansible-vault/vault.secret"
 
 # Install Ansible
 if ! [ -x "$(command -v ansible)" ]; then
@@ -39,9 +39,9 @@ ansible-galaxy install -r requirements.yml
 
 # Run playbook
 if [[ -f "$CONFIG_DIR/vault-password.txt" ]]; then
-	ansible-playbook --diff --extra-vars "@$CONFIG_DIR/values.yml" --vault-password-file "$CONFIG_DIR/vault-password.txt" "$DOTFILES_DIR/main.yml" "$@"
-	# ansible-playbook --vault-password-file $VAULT_SECRET "$DOTFILES_DIR/main.yml" "$@"
+	# ansible-playbook --diff --extra-vars "@$CONFIG_DIR/values.yml" --vault-password-file "$CONFIG_DIR/vault-password.txt" "$DOTFILES_DIR/main.yml" "$@"
+	ansible-playbook --vault-password-file $VAULT_SECRET "$DOTFILES_DIR/main.yml" "$@"
 else
-	ansible-playbook --diff --extra-vars "@$CONFIG_DIR/values.yml" "$DOTFILES_DIR/main.yml" "$@"
-	# ansible-playbook "$DOTFILES_DIR/main.yml" "$@"
+	# ansible-playbook --diff --extra-vars "@$CONFIG_DIR/values.yml" "$DOTFILES_DIR/main.yml" "$@"
+	ansible-playbook "$DOTFILES_DIR/main.yml" "$@"
 fi
