@@ -2,8 +2,9 @@
 set -e
 
 # Paths
+CONFIG_DIR="$HOME/.config/dotfiles"
 DOTFILES_DIR="$HOME/.dotfiles"
-SSH_DIR="$HOME/.ssh/"
+SSH_DIR="$HOME/.ssh"
 
 # Install Ansible
 if ! [ -x "$(command -v ansible)" ]; then
@@ -11,7 +12,7 @@ if ! [ -x "$(command -v ansible)" ]; then
 fi
 
 # Generate SSH keys
-if ! [[ -f "$SSH_DIR/id_rsa" ]]; then
+if ! [[ -f "$SSH_DIR/authorized_keys" ]]; then
 	mkdir -p "$SSH_DIR"
 
 	chmod 700 "$SSH_DIR"
@@ -19,11 +20,24 @@ if ! [[ -f "$SSH_DIR/id_rsa" ]]; then
 	ssh-keygen -b 4096 -t rsa -f "$SSH_DIR/id_rsa" -N "" -C "$USER@$HOSTNAME"
 
 	cat "$SSH_DIR/id_rsa.pub" >>"$SSH_DIR/authorized_keys"
-
-	chmod 600 "$SSH_DIR/authorized_keys"
 fi
 
-if [[ -f "$DOTFILES_DIR/requirements.yml" ]]; then
-	cd "$DOTFILES_DIR"
-	ansible-galaxy install -r requirements.yml
+# Clone repository havent tested
+if ! [[ -d "$DOTFILES_DIR" ]]; then
+	git clone "https://github.com/jmbealer/.dotfiles-new.git" "$DOTFILES_DIR"
+else
+	git -C "$DOTFILES_DIR" pull
+fi
+
+# Create path
+cd "$DOTFILES_DIR"
+
+# Update Galaxy
+ansible-galaxy install -r requirements.yml
+
+# Run playbook
+if [[ -f "$CONFIG_DIR/vault-password.txt" ]]; then
+	ansible-playbook --diff --extra-vars "@$CONFIG_DIR/values.yml" --vault-password-file "$CONFIG_DIR/vault-password.txt" "$DOTFILES_DIR/main.yml" "$@"
+else
+	ansible-playbook --diff --extra-vars "@$CONFIG_DIR/values.yml" "$DOTFILES_DIR/main.yml" "$@"
 fi
