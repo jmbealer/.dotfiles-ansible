@@ -16,23 +16,20 @@
     # src: "kitty"
     # dest: "{{ ansible_user_dir }}/.config/"
 
-- name: "kitty | Create a symbolic link"
+- name: "kitty.conf | Create a symbolic link"
   ansible.builtin.file:
     src: "{{ ansible_user_dir }}/.dotfiles/roles/kitty/files/kitty.conf"
     dest: "{{ ansible_user_dir }}/.config/kitty/kitty.conf"
     state: link
 
-# - name: Configuration
-  # ansible.builtin.file:
-    # dest: "{{ ansible_user_dir }}/.config/kitty/kitty.conf"
-    # src: "kitty.conf.j2"
-    # state: link
+- name: "kitty current-theme.conf | Create a symbolic link"
+  ansible.builtin.file:
+    src: "{{ ansible_user_dir }}/.dotfiles/roles/kitty/files/current-theme.conf"
+    dest: "{{ ansible_user_dir }}/.config/kitty/current-theme.conf"
+    state: link
 
-# - name: Themes
-  # copy:
-    # dest: "{{ ansible_user_dir }}/.config/kitty"
-    # src: "{{ kitty_config_item }}"
-  # loop_control:
-    # loop_var: kitty_config_item
-  # with_fileglob:
-    # - "kitty_*"
+- name: "kitty kitty_tokyonight_night.conf | Create a symbolic link"
+  ansible.builtin.file:
+    src: "{{ ansible_user_dir }}/.dotfiles/roles/kitty/files/kitty_tokyonight_night.conf"
+    dest: "{{ ansible_user_dir }}/.config/kitty/kitty_tokyonight_night.conf"
+    state: link
