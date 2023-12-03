@@ -11,10 +11,15 @@
     path: "{{ ansible_user_dir }}/.config/kitty"
     state: directory
 
-- name: "kitty | Copy kitty.conf"
-  ansible.builtin.copy:
+# - name: "kitty | Copy kitty.conf"
+  # ansible.builtin.copy:
+    # src: "kitty"
+    # dest: "{{ ansible_user_dir }}/.config/"
+
+- name: "kitty | Create a symbolic link"
+  ansible.builtin.file:
+    src: "{{ ansible_user_dir }}/.dotfiles/roles/kitty/files/kitty.conf"
     dest: "{{ ansible_user_dir }}/.config/kitty/kitty.conf"
-    src: "kitty.conf"
     state: link
 
 # - name: Configuration
