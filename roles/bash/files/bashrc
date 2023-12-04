@@ -21,11 +21,10 @@ HISTFILESIZE=400
 # need to move to profile
 # export HISTFILE="${XDG_STATE_HOME}"/bash/history
 
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
-PS1='[\u@\h \W]\$ '
+source $HOME/.config/bash/bash_aliases
 alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'
 alias logseq='logseq --ozone-platform=wayland --disable-gpu'
+PS1='[\u@\h \W]\$ '
 
 export PATH=$PATH:/home/jb/.dotfiles/bin
 
