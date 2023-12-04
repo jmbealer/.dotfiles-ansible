@@ -1,0 +1,19 @@
+---
+- name: "zathura | Install zathura"
+  ansible.builtin.package:
+    name: zathura
+    state: latest
+  become: true
+
+- name: "zathura | Config folder"
+  ansible.builtin.file:
+    mode: "0755"
+    path: "{{ ansible_user_dir }}/.config/zathura"
+    state: directory
+
+- name: " zathurarc | Create a symbolic link"
+  ansible.builtin.file:
+    src: "{{ ansible_user_dir }}/.dotfiles/roles/zathura/files/zathurarc"
+    dest: "{{ ansible_user_dir }}/.config/zathura/zathurarc"
+    state: link
+
