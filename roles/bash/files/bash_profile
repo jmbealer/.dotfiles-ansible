@@ -1,0 +1,26 @@
+#!/usr/bin/bash
+# ~/.bash_profile
+
+[[ -f ~/.bashrc ]] && . ~/.bashrc
+
+export XDG_CACHE_HOME=$HOME/.cache
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_STATE_HOME=$HOME/.local/state
+export XDG_CONFIG_DIRS=/etc/xdg
+
+# moves .bash_history to .local/state/bash/history
+export HISTFILE="${XDG_STATE_HOME}"/bash/history
+# moves .nv to .cache/nv
+export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
+# moves .gnupg to .local/share/gnupg
+export GNUPGHOME="$XDG_DATA_HOME"/gnupg
+# moves go to .local/share/go
+export GOPATH="$XDG_DATA_HOME"/go
+export GOMODCACHE="$XDG_CACHE_HOME"/go/mod
+
+# dont know if it worked
+CARGO_HOME="$XDG_DATA_HOME"/cargo
+RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+GTK2_RC_FILES=""$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
+# VIMINIT="set nocp | source ${XDG_CONFIG_HOME:-$HOME/.config}/vim/vimrc"

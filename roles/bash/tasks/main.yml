@@ -1,0 +1,41 @@
+---
+- name: "bash | Install bash"
+  ansible.builtin.package:
+    name: bash
+    state: latest
+  become: true
+
+- name: "bash | Config folder"
+  ansible.builtin.file:
+    mode: "0755"
+    path: "{{ ansible_user_dir }}/.config/bash"
+    state: directory
+
+# - name: "bash | Copy bash.conf"
+  # ansible.builtin.copy:
+    # src: "bash"
+    # dest: "{{ ansible_user_dir }}/.config/"
+
+- name: ".bashrc | Create a symbolic link"
+  ansible.builtin.file:
+    src: "{{ ansible_user_dir }}/.dotfiles/roles/bash/files/bashrc"
+    dest: "{{ ansible_user_dir }}/.bashrc"
+    state: link
+
+- name: ".bash_profile | Create a symbolic link"
+  ansible.builtin.file:
+    src: "{{ ansible_user_dir }}/.dotfiles/roles/bash/files/bash_profile"
+    dest: "{{ ansible_user_dir }}/.bash_profile"
+    state: link
+
+- name: ".bash_logout | Create a symbolic link"
+  ansible.builtin.file:
+    src: "{{ ansible_user_dir }}/.dotfiles/roles/bash/files/bash_logout"
+    dest: "{{ ansible_user_dir }}/.bash_logout"
+    state: link
+
+- name: "bash_aliases | Create a symbolic link"
+  ansible.builtin.file:
+    src: "{{ ansible_user_dir }}/.dotfiles/roles/bash/files/bash_aliases"
+    dest: "{{ ansible_user_dir }}/.config/bash/bash_aliases"
+    state: link
