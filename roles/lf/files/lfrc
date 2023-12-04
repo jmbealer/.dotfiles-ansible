@@ -14,6 +14,23 @@ map b open
 map T :updir; down; open
 map N :updir; up; open
 
+# use enter for shell commands
+map <enter> shell
+
+# execute current file (must be executable)
+map x $$f
+map X !$f
+
+# dedicated keys for file opener actions
+map o $mimeopen $f
+map O $mimeopen -- ask $f
+
+# cmd open-with-gui &$@ $fx ## opens with a gui application outside lf client
+# cmd open-with-cli $$@ $fx ## opens with a cli application inside lf client
+# map O push :open-with-gui<space> ## input application
+# map o push :open-with-cli<space> ## input application
+
+
 # Previews
 set previewer ctpv
 set cleaner ctpvclear
