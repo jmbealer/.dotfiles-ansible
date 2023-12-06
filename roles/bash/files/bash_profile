@@ -23,7 +23,7 @@ export PATH=$PATH:/home/jb/.dotfiles/bin
 # move ./.m2 to .local/share/lein
 export LEIN_HOME="$XDG_DATA_HOME"/lein
 # moves .nb to .local/share/nb
-export NB_DIR="$XDG_DATA_HOME/nb"
+# export NB_DIR="$XDG_DATA_HOME/nb"
 # moves .nbrc to .config/nbrc
 export NBRC_PATH="$XDG_CONFIG_HOME/nbrc"
 # moves .rustup to .local/share/rustup

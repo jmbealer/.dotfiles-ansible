@@ -28,7 +28,8 @@ PS1='[\u@\h \W]\$ '
 
 export PATH=$PATH:/home/jb/.dotfiles/bin
 export LEIN_HOME="$XDG_DATA_HOME"/lein
-export NB_DIR="$XDG_DATA_HOME/nb"
+# export NB_DIR="$XDG_DATA_HOME/nb"
+export NB_DIR="${NB_DIR:-/home/jb/Documents/Vault}"
 export NBRC_PATH="$XDG_CONFIG_HOME/nbrc"
 export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 # to move yarn config file to XDG_CONFIG_HOME
