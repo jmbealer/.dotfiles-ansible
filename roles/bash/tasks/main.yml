@@ -1,9 +1,10 @@
 ---
 - name: "bash | Install bash"
+  # become: yes
+  # become_user: ansible
   ansible.builtin.package:
     name: bash
     state: latest
-  become: true
 
 - name: "bash | Config folder"
   ansible.builtin.file:

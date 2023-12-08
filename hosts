@@ -1,2 +1,11 @@
 [local]
-localhost ansible_connection=local
+# localhost ansible_user=jb
+# ansible_connection=ssh ansible_ssh_private_key_file=~/.ssh/id_ed25519
+localhost
+
+[local:vars]
+ansible_connection=local
+# ansible_connection=ssh ansible_ssh_private_key_file=~/.ssh/id_ed25519
+# /home/jb/.ssh/id_ed25519
+# /home/jb/.ssh/id_rsa
+# /home/jb/.ssh/authorized_keys
