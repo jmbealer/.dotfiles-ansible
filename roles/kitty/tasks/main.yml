@@ -3,7 +3,7 @@
   ansible.builtin.package:
     name: kitty
     state: latest
-  become: true
+  # become: true
 
 - name: "kitty | Config folder"
   ansible.builtin.file:
