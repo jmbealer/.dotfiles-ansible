@@ -1,10 +1,10 @@
 username: jb
 default_roles:
-  - system
-  - kitty
+  # - system
+  # - kitty
   - bash
   - lf
-  - zathura
+  # - zathura
 
 git_user_name: "Justin Bealer"
 git_user_email: !vault |

@@ -55,7 +55,11 @@ fi
 # fi
 
 # Runs Ansible playbook using our user
-ansible-playbook -i "$HOSTS" "$PLAYBOOK" "$@"
+# ansible-playbook -i "$HOSTS" "$PLAYBOOK" "$@" --vault-password-file vault.txt --become-password-file pass.txt
+# ansible-playbook -i "$HOSTS" "$PLAYBOOK" "$@" --become-password-file pass.txt
+# ansible-playbook -i "$HOSTS" "$PLAYBOOK" "$@" --become-password-file ~/.dotfiles/secrets/pass.txt --vault-password-file ~/.dotfiles/secrets/vault.txt
+ansible-playbook -i "$HOSTS" "$PLAYBOOK" "$@" --extra-vars '@passwords.yml' --vault-password-file vault.txt
 # ansible-playbook -i "$HOSTS" "$PLAYBOOK"
+# ansible-playbook "$PLAYBOOK" -i "$HOSTS" --vault-password-file vault.txt
 
 exit 0
