@@ -1,3 +1,4 @@
+username: jb
 default_roles:
   - system
   - kitty
